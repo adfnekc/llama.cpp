@@ -74,6 +74,13 @@ static_assert(sizeof(block_iq4_nlx4) == 4 * sizeof(ggml_half) + QK4_NL * 2, "wro
 //                         from bias offset form to pure sign form (this saves subtract
 //                         operations durin unpacking)
 //
+
+#if defined(__GNUC__) && defined(__linux__)
+#if __GNUC__ < 8 && __linux__
+#error "macor __AVX__ requires GCC version 8 or higher. "
+#endif
+#endif
+
 #if defined(__AVX__)
 #if defined(__F16C__)
 #if defined(__AVX512F__)
